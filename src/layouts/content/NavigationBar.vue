@@ -14,7 +14,7 @@
         </v-col>
         
         <v-col class="col-3">
-          <v-form class="d-flex" ref="loginForm" @submit.prevent="fetchWeather">
+          <v-form class="d-flex" ref="searchFormRef" @submit.prevent="fetchWeather">
             <v-text-field
               dense
               v-model="input"
@@ -68,6 +68,7 @@ export default defineComponent({
     const input = ref<string>('');
     const inputErrorMessage = ref<string>('')
     const isFetching = ref<boolean>(false)
+    const searchFormRef = ref<any>(null)
 
     // App configurations
     const appLogo = config.app.logo
@@ -85,6 +86,10 @@ export default defineComponent({
 
     // Search method
     const fetchWeather = ():void => {
+      if (!searchFormRef.value) return
+      const isFormValid = searchFormRef.value.validate()
+      if (!isFormValid) return
+
       isFetching.value = true
       inputErrorMessage.value = ''
       store.dispatch('weather/fetchWeather', input.value)
@@ -120,6 +125,7 @@ export default defineComponent({
     )
 
     return {
+      searchFormRef,
       items,
       drawer,
       input,
