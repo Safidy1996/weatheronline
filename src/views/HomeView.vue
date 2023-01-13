@@ -1,17 +1,16 @@
 <template>
-  <div class="home">
-    <Meteo />
-  </div>
+  <hello-world />
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Meteo from "@/components/Meteo.vue";
+import HelloWorld from "../components/HelloWorld.vue";
 
 export default Vue.extend({
   name: "Home",
+
   components: {
-    Meteo,
+    HelloWorld,
   },
 });
 </script>

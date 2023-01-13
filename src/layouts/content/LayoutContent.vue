@@ -1,20 +1,28 @@
 <template>
-  <component :is="resolveLayoutVariant">
-    <router-view></router-view>
-  </component>
+  <v-app class="app">
+    <navigation-bar></navigation-bar>
+    <v-main class="mt-4">
+      <v-container fluid class="main mx-auto">
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+    <v-footer color="grey lighten-2" app>
+      <span class="black--text caption">
+        &copy; Rojoniaina Safidy Rakotondranary - Test Celaneo
+      </span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script lang="ts">
 import { useRouter } from "@/utils";
 import { defineComponent } from "vue";
 import { computed } from "vue";
-import LayoutContent from "@/layouts/content/LayoutContent.vue";
-import LayoutBlank from "@/layouts/LayoutBlank.vue";
+import NavigationBar from "@/layouts/content/NavigationBar.vue";
 
 export default defineComponent({
   components: {
-    LayoutContent,
-    LayoutBlank,
+    NavigationBar,
   },
   setup() {
     const route = useRouter()?.route?.value;
@@ -33,3 +41,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.app {
+  background: #f4f5fa;
+  .main {
+    max-width: 1248px;
+  }
+}
+</style>
