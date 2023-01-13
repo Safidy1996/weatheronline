@@ -1,5 +1,3 @@
 import UnitConstant from "./modules/unitConstant";
 
-export {
-  UnitConstant,
-};
+export { UnitConstant };

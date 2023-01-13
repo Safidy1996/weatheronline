@@ -1,10 +1,10 @@
-import { mdiWeatherHail } from '@mdi/js'
+import { mdiWeatherHail } from "@mdi/js";
 
 const config = {
   app: {
-    name: 'WeatherOnline',
+    name: "WeatherOnline",
     logo: mdiWeatherHail,
-  }
-}
+  },
+};
 
-export default config
+export default config;

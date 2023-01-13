@@ -1,8 +1,9 @@
-import { State } from './interfaces';
+import { unitOption } from "@/interfaces";
+import { State } from "./interfaces";
 
-export function activeUnit (state: State) {
-  return state.activeUnit
+export function activeUnit(state: State): unitOption | undefined {
+  return state.activeUnit;
 }
-export function active (state: State) {
+export function active(state: State): any {
   return state.active;
 }
