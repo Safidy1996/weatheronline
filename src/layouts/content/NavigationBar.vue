@@ -14,18 +14,21 @@
         </v-col>
         
         <v-col class="col-3">
-          <v-text-field
-            dense
-            v-model="input"
-            placeholder="Search city"
-            label="City"
-            :loading="isFetching"
-            :error-messages="inputErrorMessage"
-            hide-details="auto"
-            :prepend-icon="icons.mdiMagnify"
-            color="orange accent-4"
-            @blur="fetchWeather"
-          ></v-text-field>
+          <v-form class="d-flex" ref="loginForm" @submit.prevent="fetchWeather">
+            <v-text-field
+              dense
+              v-model="input"
+              placeholder="Search city"
+              :loading="isFetching"
+              :error-messages="inputErrorMessage"
+              :rules="[validators.alphaDashValidator, validators.required]"
+              hide-details="auto"
+              :prepend-icon="icons.mdiMapMarkerOutline"
+              color="orange accent-4"
+            >
+            </v-text-field>
+            <v-btn class="ml-2" color="orange darken-4" type="submit"> <v-icon>{{ icons.mdiMagnify }}</v-icon> </v-btn>
+          </v-form>
         </v-col>
 
         <v-col class="d-flex justify-end">
@@ -54,8 +57,9 @@ import { useRouter } from "@/utils";
 import { defineComponent, ref, computed, watch } from "vue";
 import VueRouter, { Route } from "vue-router";
 import config from "@/config";
-import { mdiMagnify } from '@mdi/js';
+import { mdiMapMarkerOutline, mdiMagnify } from '@mdi/js';
 import { UnitConstant as optionsUnit } from '@/constants';
+import { alphaDashValidator, required} from '@/utils/validation'
 
 export default defineComponent({
   setup() {
@@ -82,13 +86,16 @@ export default defineComponent({
     // Search method
     const fetchWeather = ():void => {
       isFetching.value = true
+      inputErrorMessage.value = ''
       store.dispatch('weather/fetchWeather', input.value)
         .then(response => response.data)
         .then(weather => {
           store.commit('weather/setActive', weather)
           isFetching.value = false
         })
-        .catch(() => {
+        .catch((error) => {
+          if (error.response.data .message) 
+            inputErrorMessage.value = error.response.data .message
           store.commit('weather/setActive', {})
           isFetching.value = false
         })
@@ -126,7 +133,13 @@ export default defineComponent({
       optionsUnit,
 
       icons: {
+        mdiMapMarkerOutline,
         mdiMagnify,
+      },
+
+      validators: {
+        alphaDashValidator,
+        required,
       },
 
       fetchWeather,
